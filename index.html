@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primary Health Centre (PHC) Thungani | Public Healthcare Portal</title>
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --secondary: #0d9488;
+            --accent: #f59e0b;
+            --danger: #dc2626;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 10px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 8px 5%;
+            font-size: 0.88rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .top-bar .emergency {
+            color: #fca5a5;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Ticker Banner */
+        .ticker-wrap {
+            background: #fee2e2;
+            border-bottom: 1px solid #fca5a5;
+            color: #991b1b;
+            padding: 8px 5%;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .ticker-title {
+            background: var(--danger);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-right: 12px;
+            white-space: nowrap;
+        }
+
+        .ticker-text {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        /* Header Navigation */
+        header {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.25rem;
+            color: var(--primary-dark);
+            line-height: 1.1;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0284c7 0%, #0d9488 100%);
+            color: white;
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            opacity: 0.95;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .btn-primary {
+            background: #ffffff;
+            color: var(--primary-dark);
+        }
+
+        .btn-primary:hover {
+            background: #f1f5f9;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+        }
+
+        /* Container Layout */
+        .main-container {
+            max-width: 1280px;
+            margin: 40px auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 8px;
+        }
+
+        /* Cards Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: #e0f2fe;
+            color: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* Announcement Section */
+        .notice-board {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            height: fit-content;
+        }
+
+        .notice-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .notice-item {
+            border-left: 4px solid var(--primary);
+            padding-left: 12px;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .notice-item.urgent {
+            border-left-color: var(--danger);
+            background: #fef2f2;
+        }
+
+        .notice-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .notice-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 4px 0;
+        }
+
+        .notice-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Timings & OPD Schedule Table */
+        .table-responsive {
+            overflow-x: auto;
+            margin-bottom: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: #f1f5f9;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success { background: #dcfce7; color: #15803d; }
+        .badge-info { background: #e0f2fe; color: #0369a1; }
+
+        /* Citizen Charter Section */
+        .charter-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .charter-box ul {
+            padding-left: 20px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .charter-box li {
+            margin-bottom: 6px;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 40px 5% 20px;
+            margin-top: 60px;
+        }
+
+        .footer-grid {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .footer-col h4 {
+            color: #f8fafc;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.88rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .footer-col a:hover {
+            color: #ffffff;
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.8rem;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div>📍 Location: Primary Health Centre, Thungani Village, Ramanagara District</div>
+        <div class="emergency">🚨 24x7 Casualty & Emergency Helpline: +91 080-2720-0000</div>
+    </div>
+
+    <!-- Announcement Ticker -->
+    <div class="ticker-wrap">
+        <span class="ticker-title">Urgent Notice</span>
+        <span class="ticker-text">Free Pulse Polio Immunization Drive scheduled for Sunday at PHC Thungani & Sub-Centres. All parents are requested to bring children under 5 years.</span>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">+</div>
+                <div class="logo-text">
+                    <h1>PHC Thungani</h1>
+                    <p>Department of Health & Family Welfare Services</p>
+                </div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#schedule">OPD Schedule</a></li>
+                    <li><a href="#notices">Announcements</a></li>
+                    <li><a href="#charter">Citizen Charter</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Quality & Accessible Healthcare for Every Citizen</h2>
+            <p>Providing essential medical services, maternal & child care, free diagnostic lab tests, and 24x7 emergency casualty support at Primary Health Centre, Thungani.</p>
+            <div class="btn-group">
+                <a href="#schedule" class="btn btn-primary">View OPD Timings</a>
+                <a href="#notices" class="btn btn-primary">Latest Announcements</a>
+                <a href="tel:108" class="btn btn-danger">Call Ambulance (108)</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Layout Content -->
+    <div class="main-container">
+
+        <!-- Left Column: Primary Patient Information -->
+        <main>
+
+            <!-- Services Section -->
+            <section id="services">
+                <h2 class="section-title">🏥 Patient Healthcare Services</h2>
+                <div class="services-grid">
+                    <div class="card">
+                        <div class="card-icon">👨‍⚕️</div>
+                        <h3>General Outpatient (OPD)</h3>
+                        <p>Comprehensive consultation for acute & chronic illnesses by qualified Medical Officers.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">👶</div>
+                        <h3>Maternal & Child Health</h3>
+                        <p>Antenatal checkups (ANC), institutional delivery, post-natal care, and immunizations.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🧪</div>
+                        <h3>Diagnostic Laboratory</h3>
+                        <p>Free blood, urine, hemoglobin, malaria, sputum, and blood sugar testing under N-KHY scheme.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">💊</div>
+                        <h3>Free Pharmacy</h3>
+                        <p>100% free essential medicines provided as prescribed by PHC doctors under Jan Aushadhi guidelines.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🚑</div>
+                        <h3>24/7 Casualty & Emergency</h3>
+                        <p>First-aid, emergency stabilization, snake-bite treatment, and referral transportation support.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">💉</div>
+                        <h3>National Health Programmes</h3>
+                        <p>Free screening & care for TB (NTEP), Leprosy, Dengue, Malaria, and NCDs (Diabetes & BP).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- OPD Schedule & Doctors Table -->
+            <section id="schedule">
+                <h2 class="section-title">📅 Weekly OPD Schedule & Duty Doctors</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Department / Service</th>
+                                <th>Days</th>
+                                <th>Timings</th>
+                                <th>Status / Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>General OPD Consultation</strong></td>
+                                <td>Monday – Saturday</td>
+                                <td>09:00 AM – 04:30 PM</td>
+                                <td><span class="badge badge-success">Regular Duty</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Immunization & Vaccination</strong></td>
+                                <td>Every Wednesday</td>
+                                <td>09:00 AM – 01:30 PM</td>
+                                <td><span class="badge badge-info">Routine Drive</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Antenatal Care (ANC) Clinic</strong></td>
+                                <td>Every Thursday</td>
+                                <td>09:30 AM – 02:00 PM</td>
+                                <td><span class="badge badge-info">Maternal Health</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>NCD Screening (BP / Sugar)</strong></td>
+                                <td>Daily (Mon – Sat)</td>
+                                <td>09:00 AM – 01:00 PM</td>
+                                <td><span class="badge badge-success">Walk-in</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Emergency & Casualty</strong></td>
+                                <td>All 7 Days</td>
+                                <td>24 Hours Open</td>
+                                <td><span class="badge badge-success">24x7 Available</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Citizen Charter / Patient Rights -->
+            <section id="charter">
+                <h2 class="section-title">📜 Citizen Charter & Patient Guidelines</h2>
+                <div class="charter-box">
+                    <h3>What Patients Should Know Before Visiting PHC Thungani:</h3>
+                    <ul>
+                        <li><strong>Registration:</strong> Please register at the counter with your **Aadhaar Card** or **ABHA ID** to generate your OPD card.</li>
+                        <li><strong>Free Services:</strong> All consultations, diagnostic lab tests, essential medicines, and maternal care are provided <strong>100% free of charge</strong>.</li>
+                        <li><strong>Emergency Care:</strong> Emergency cases are given immediate priority over routine OPD lines.</li>
+                        <li><strong>Referrals:</strong> Cases requiring higher secondary/tertiary surgical or specialist care will be referred with official referral slips to the District Hospital.</li>
+                    </ul>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Right Column: Live Announcement & Notice Board -->
+        <aside>
+            <div class="notice-board" id="notices">
+                <h2 class="section-title" style="font-size: 1.25rem;">📢 Official Notice Board</h2>
+                <div class="notice-list">
+                    
+                    <div class="notice-item urgent">
+                        <div class="notice-date">October 10, 2026</div>
+                        <div class="notice-title">Pulse Polio Immunization Campaign</div>
+                        <div class="notice-desc">Special booth set up at PHC Thungani main entrance. Free polio drops for all children aged 0-5 years.</div>
+                    </div>
+
+                    <div class="notice-item">
+                        <div class="notice-date">October 05, 2026</div>
+                        <div class="notice-title">Free Diabetes & Hypertension Camp</div>
+                        <div class="notice-desc">All residents above 30 years are requested to get screened for Blood Pressure and Blood Sugar this Friday.</div>
+                    </div>
+
+                    <div class="notice-item">
+                        <div class="notice-date">September 28, 2026</div>
+                        <div class="notice-title">Vector-Borne Disease Advisory</div>
+                        <div class="notice-desc">Precautionary measures against Dengue & Chikungunya. Ensure no standing water around houses. Free testing available at lab.</div>
+                    </div>
+
+                    <div class="notice-item">
+                        <div class="notice-date">September 15, 2026</div>
+                        <div class="notice-title">ABHA Health Card Generation</div>
+                        <div class="notice-desc">Bring your Aadhaar card and linked mobile number to create your digital health account at Counter 1.</div>
+                    </div>
+
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Contact & Location Footer Section -->
+    <footer id="contact">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>PHC Thungani</h4>
+                <p style="font-size: 0.88rem; line-height: 1.5;">Providing compassionate and equitable public healthcare services to the community of Thungani and surrounding sub-centre villages.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Emergency Contact</h4>
+                <ul>
+                    <li>📞 PHC Emergency Line: 080-2720-0000</li>
+                    <li>🚑 National Ambulance Service: 108</li>
+                    <li>👩‍⚕️ Health Helpline (KPTCL/NHM): 104</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Key Links</h4>
+                <ul>
+                    <li><a href="#services">Health Services</a></li>
+                    <li><a href="#schedule">OPD Timings</a></li>
+                    <li><a href="#notices">Public Notices</a></li>
+                    <li><a href="#charter">Patient Rights</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 Primary Health Centre (PHC) Thungani. Department of Health & Family Welfare. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Interactive JS Script -->
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
